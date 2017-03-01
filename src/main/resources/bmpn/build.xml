@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="act">
+
+	<!-- properties from key value -->
+	<property name="designs" value="designs" />
+	<property name="deployments" value="deployments" />
+
+	<!-- 请假流程定义打包 -->
+	<target name="myProcess">
+		<echo>MyProcess 测试流程</echo>
+		<copy file="${designs}/01/MyProcess.bpmn" tofile="${designs}/01/MyProcess.bpmn20.xml" />
+		<zip destfile="${deployments}/MyProcess.bar" basedir="${designs}/01" update="true" includes="*.xml,*.png" />
+		<delete file="${designs}/drm/01/cdm_drm_01.bpmn20.xml" />
+	</target>
+
+</project>
