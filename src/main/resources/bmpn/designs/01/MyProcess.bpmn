@@ -3,14 +3,14 @@
   <process id="myProcess" name="My process" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="usertask1" name="初审" activiti:candidateGroups="Input" activiti:formKey="input.jsp">
+    <userTask id="usertask1" name="初审" activiti:candidateGroups="Input" activiti:formKey="/form/input">
       <extensionElements>
         <activiti:formProperty id="biz_no" name="业务编号" type="string"></activiti:formProperty>
         <activiti:formProperty id="acct_no" name="账户" type="string"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-    <userTask id="usertask2" name="复核" activiti:candidateGroups="Check">
+    <userTask id="usertask2" name="复核" activiti:candidateGroups="Check" activiti:formKey="/form/check">
       <extensionElements>
         <activiti:formProperty id="biz_no" name="业务编号" type="string"></activiti:formProperty>
         <activiti:formProperty id="acct_no" name="账户" type="string"></activiti:formProperty>

@@ -8,8 +8,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.activiti.engine.FormService;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,23 +35,24 @@ public class TaskController {
 	
 	@RequestMapping(value="/task-start")
 	public String taskStart(@RequestParam("processDefinitionId")String processDefinitionId){
-		
 		Map<String, String> variables = new HashMap<String, String>();
-		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddhhmmss");
-		
-		String dateNow = sf.format(new Date());
-		variables.put("biz_no", "PEM01" + dateNow + "001");
-		ActivitiUtils.getProcessEngine().getFormService().submitStartFormData(processDefinitionId, variables);
+		variables.put("acct_no", "1011000005101");
+		ActivitiUtils.getProcessEngine().getFormService().submitStartFormData(processDefinitionId, "PEM0100000001", variables);
 		return "redirect:task-list";
 	}
 	
 	@RequestMapping(value="/task-form")
 	public ModelAndView taskForm(@RequestParam("taskId")String taskId){
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("task-form");
-
-		FormService formService = ActivitiUtils.getProcessEngine().getFormService();
-		mv.addObject("renderForm", formService.getRenderedTaskForm(taskId));
+		ProcessEngine processEngine = ActivitiUtils.getProcessEngine();
+		Task task = ActivitiUtils.getProcessEngine().getTaskService().createTaskQuery().taskId(taskId).singleResult();
+		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceBusinessKey("PEM0100000001").singleResult();
+		Map<String, Object> processVariables = processInstance.getProcessVariables();
+		Map<String, Object > variables = task.getProcessVariables();
+		System.out.println(processVariables.get("biz_no").toString());
+		System.out.println(variables.get("biz_no").toString());
+		mv.setViewName("redirect:"+task.getFormKey());
+		mv.addObject("variables", task.getProcessVariables());
 		return mv;
 	}
 	
