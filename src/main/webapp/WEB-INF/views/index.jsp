@@ -45,12 +45,8 @@ function autoResizeIframeHeight() {
 	        </ul>
 	      </div>
           <ul class="nav pull-right">
-            <li class="dropdown">
-            	<ul class="dropdown-menu">
-					<li><a id="changePwd" href="#"><i class="icon-wrench icon-black"></i>修改密码</a></li>
-					<li><a id="loginOut" href="#"><i class="icon-eject icon-black"></i>安全退出</a></li>
-				</ul>
-            </li>
+			<li><a id="changePwd" href="#"><i class="icon-wrench icon-black"></i>修改密码</a></li>
+			<li><a id="loginOut" href="${ctx }/logout"><i class="icon-eject icon-black"></i>安全退出</a></li>
           </ul>
 	    </div>
 	</div>
