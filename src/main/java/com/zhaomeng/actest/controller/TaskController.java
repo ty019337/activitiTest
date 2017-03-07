@@ -20,9 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zhaomeng.actest.utils.ActivitiUtils;
 
 @Controller
+@RequestMapping(value="task")
 public class TaskController {
 
-	@RequestMapping(value="/task-list")
+	@RequestMapping(value="task-list")
 	public ModelAndView getTaskList(HttpSession session){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("task-list");
@@ -33,7 +34,7 @@ public class TaskController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/task-start")
+	@RequestMapping(value="task-start")
 	public String taskStart(@RequestParam("processDefinitionId")String processDefinitionId){
 		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
 		String biz_no = String.format("DDM01%s%f", sf.format(new Date()), Math.random());
@@ -42,7 +43,7 @@ public class TaskController {
 		return "redirect:task-list";
 	}
 	
-	@RequestMapping(value="/task-form")
+	@RequestMapping(value="task-form")
 	public ModelAndView taskForm(@RequestParam("taskId")String taskId){
 		ModelAndView mv = new ModelAndView();
 		ProcessEngine processEngine = ActivitiUtils.getProcessEngine();
@@ -55,7 +56,7 @@ public class TaskController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/task-delete")
+	@RequestMapping(value="task-delete")
 	public String taskDelete(@RequestParam("taskId")String taskId){
 		TaskService taskService = ActivitiUtils.getProcessEngine().getTaskService();
 		String processInstanceId = taskService.createTaskQuery().taskId(taskId).singleResult().getProcessInstanceId();
