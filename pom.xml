@@ -11,6 +11,11 @@
   		<artifactId>activiti-engine</artifactId>
   		<version>5.16</version>
   	</dependency>
+ 	<dependency>
+		<groupId>org.activiti</groupId>
+		<artifactId>activiti-spring</artifactId>
+		<version>${activiti.version}</version>
+	</dependency>
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-log4j12</artifactId>
@@ -55,5 +60,6 @@
   
   <properties>
   	<spring.version>4.0.8.RELEASE</spring.version>
+  	<activiti.version>5.16</activiti.version>
   </properties>
 </project>

@@ -40,13 +40,13 @@ function autoResizeIframeHeight() {
 	      <a href="#" class="brand">Activiti Explorer</a>
 	      <div class="nav-collapse">
 	        <ul class="nav">
-				<li><a href="#" rel="process-list">流程定义</a></li>
-				<li><a href="#" rel="task-list">代办任务</a></li>
+				<li><a href="#" rel="/deployment/process-list">流程定义</a></li>
+				<li><a href="#" rel="/task/list">代办任务</a></li>
 	        </ul>
 	      </div>
           <ul class="nav pull-right">
 			<li><a id="changePwd" href="#"><i class="icon-wrench icon-black"></i>修改密码</a></li>
-			<li><a id="loginOut" href="${ctx }/logout"><i class="icon-eject icon-black"></i>安全退出</a></li>
+			<li><a id="loginOut" href="${ctx }/user/logout"><i class="icon-eject icon-black"></i>安全退出</a></li>
           </ul>
 	    </div>
 	</div>

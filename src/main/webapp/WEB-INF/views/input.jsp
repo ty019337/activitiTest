@@ -11,7 +11,7 @@
 <body>
 	<p>input form</p>
 	<p><%=request.getParameter("biz_no") %></p>
-	<form action="${ctx }/inputForm/save" method="POST" >
+	<form action="${ctx }/form/save" method="POST" >
 		<table>
 			<tr>
 				<td>taskId</td>

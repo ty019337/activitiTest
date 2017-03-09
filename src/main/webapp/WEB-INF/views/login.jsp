@@ -16,7 +16,7 @@
 		<div>
 			<h1>Activiti测试平台</h1>
 		</div>
-		<form method="post" action="${ctx}/login">
+		<form method="post" action="${ctx}/user/login">
 			<table>
 				<tr>
 					<td>用户名：</td>

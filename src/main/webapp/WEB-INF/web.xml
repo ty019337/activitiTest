@@ -12,7 +12,7 @@
 	</context-param>
 	
 	<listener>
-		<listener-class>com.yqjr.base.modules.sys.listener.WebContextListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
 	<filter>
@@ -48,7 +48,10 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
+	<session-config>
+        <session-timeout>600</session-timeout>
+    </session-config>
+    
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500.jsp</location>

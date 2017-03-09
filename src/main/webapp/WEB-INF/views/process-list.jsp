@@ -11,7 +11,7 @@
 <body>
 	<fieldset>
 		<legend>部署流程资源</legend>
-		<form action="${ctx }/deploy" method="post" enctype="multipart/form-data">
+		<form action="${ctx }/deployment/deploy" method="post" enctype="multipart/form-data">
 			<input type="file" name="file"/>
 			<input type="submit" name="sbt" value="提交"/>
 		</form>
@@ -34,11 +34,11 @@
 				<td>${pd.name }</td>
 				<td>${pd.key }</td>
 				<td>${pd.version }</td>
-				<td><a target="_blank" href="${ctx }/getresource?id=${pd.id }&name=${pd.resourceName}">${pd.resourceName }</a></td>
+				<td><a target="_blank" href="${ctx }/deployment/getresource?id=${pd.id }&name=${pd.resourceName}">${pd.resourceName }</a></td>
 				<td>${pd.diagramResourceName }</td>
 				<td>
-					<a target="_blank" href="${ctx }/delete-process?deploymentId=${pd.deploymentId}">删除</a>
-					<a href="${ctx }/task-start?processDefinitionId=${pd.id }">启动流程</a>
+					<a target="_blank" href="${ctx }/deployment/delete-process?deploymentId=${pd.deploymentId}">删除</a>
+					<a href="${ctx }/task/task-start?processDefinitionId=${pd.id }">启动流程</a>
 				</td>
 			</tr>
 		</c:forEach>
