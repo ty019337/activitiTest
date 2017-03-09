@@ -1,1 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/db.properties" />
+	
+	<bean id="dataSource"
+	    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName" value="${jdbc.driver}" />
+	    <property name="url" value="${jdbc.url}" />
+	    <property name="username" value="${jdbc.username}" />
+	    <property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <property name="dataSource">
+	        <ref bean="dataSource" />
+	    </property>
+	</bean>
+	
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+	<!-- Activiti引擎配置 -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="processEngineName" value="spring" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="databaseSchemaUpdate" value="false" />
+		<property name="jobExecutorActivate" value="false" />
+        <property name="activityFontName" value="宋体" />
+        <property name="labelFontName" value="宋体" />
+	</bean>
+
+	<!-- Activiti引擎工厂 -->
+	<bean id="processEngineFactory" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+
+	<!-- Activiti的Service -->
+	<bean id="repositoryService" factory-bean="processEngineFactory" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngineFactory" factory-method="getRuntimeService" />
+	<bean id="formService" factory-bean="processEngineFactory" factory-method="getFormService" />
+	<bean id="identityService" factory-bean="processEngineFactory" factory-method="getIdentityService" />
+	<bean id="taskService" factory-bean="processEngineFactory" factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngineFactory" factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngineFactory" factory-method="getManagementService" />
+	
+</beans>

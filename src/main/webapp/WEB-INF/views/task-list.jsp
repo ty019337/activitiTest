@@ -14,8 +14,8 @@
 			<td>${task.id }</td>
 			<td>${task.name }</td>
 			<td>${task.owner }</td>
-			<td><a href="${ctx }/task-form?taskId=${task.id}">办理</a></td>
-			<td><a href="${ctx }/task-delete?taskId=${task.id }">删除</a></td>
+			<td><a href="${ctx }/task/form?taskId=${task.id}">办理</a></td>
+			<td><a href="${ctx }/task/delete?taskId=${task.id }">删除</a></td>
 		</tr>
 		</c:forEach>
 	</table>

@@ -11,6 +11,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zhaomeng.actest.utils.ActivitiUtils;
 
 @Controller
+@RequestMapping(value="deployment")
 public class DeploymentController {
 	
+	@Autowired
+	private RepositoryService repositoryService;
 	/**
 	 * 
 	 * @return
@@ -29,7 +33,6 @@ public class DeploymentController {
 	@RequestMapping(value="process-list")
 	public ModelAndView processDefiList(){
 		ModelAndView mv = new ModelAndView();
-		RepositoryService repositoryService = ActivitiUtils.getProcessEngine().getRepositoryService();
 		List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery().list();
 		mv.addObject("processDefinitionList", processDefinitionList);
 		mv.setViewName("process-list");
@@ -48,19 +51,18 @@ public class DeploymentController {
 		String extensions = FilenameUtils.getExtension(fileName);
 		InputStream inputStream = file.getInputStream();
 		
-		DeploymentBuilder deploymentBuilder = ActivitiUtils.getProcessEngine().getRepositoryService().createDeployment();
+		DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
 		if(extensions.equals("zip") || extensions.equals("bar")){
 			deploymentBuilder.addZipInputStream(new ZipInputStream(inputStream));
 		}else{
 			deploymentBuilder.addInputStream(fileName, inputStream);
 		}
 		deploymentBuilder.deploy();
-		return "redirect:process-list";
+		return "redirect:/deployment/process-list";
 	}
 	
 	@RequestMapping(value="getresource")
 	public void getResource(@RequestParam("id")String id, @RequestParam("name")String name, HttpServletResponse response) throws Exception{
-		RepositoryService repositoryService = ActivitiUtils.getProcessEngine().getRepositoryService();
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(id).singleResult();
 		InputStream inputStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), name);
 		byte[] b = new byte[1024];
@@ -72,8 +74,7 @@ public class DeploymentController {
 	
 	@RequestMapping(value="delete-process")
 	public String deleteProcess(@RequestParam("deploymentId")String id){
-		RepositoryService repositoryService = ActivitiUtils.getProcessEngine().getRepositoryService();
 		repositoryService.deleteDeployment(id);
-		return "redirect:process-list";
+		return "redirect:/deployment/process-list";
 	}
 }
